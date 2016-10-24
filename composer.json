@@ -14,26 +14,14 @@
       "role": "Developer"
     }
   ],
-  "repositories":[
-    {
-      "type": "vcs",
-      "url": "https://github.com/postmatic/postmatic-basic"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/vernal-creative/html-to-markdown"
-    }
-  ],
-  "extra": {
-    "installer-paths": {
-      "vendor/plugins/{$name}": ["type:wordpress-plugin"]
-    }
+  "autoload": {
+	  "psr-4": {
+		  "Postmatic\\Commentium\\": "source"
+	  }
   },
-  "require-dev": {
-    "phpunit/phpunit": "4.2.*",
-    "prompt/prompt-core": "dev-legacy-posts",
-    "scribu/scb-framework": "dev-master",
-    "vernal-creative/html-to-markdown": "dev-postmatic",
-    "xamin/handlebars.php": "dev-php-52"
+  "autoload-dev": {
+	  "psr-4": {
+		  "Postmatic\\Commentium\\Unit_Tests\\": "tests/phpunit"
+	  }
   }
 }
