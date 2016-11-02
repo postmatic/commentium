@@ -11,7 +11,7 @@ class Comment_Moderation extends Mock_Mailer_Test_Case {
 	function test_default() {
 		$original_addresses = array( 'test@example.com' );
 
-		$comment_id = static::factory()->comment->create();
+		$comment_id = $this->factory->comment->create();
 
 		$recipients = Filters\Comment_Moderation::recipients( $original_addresses, $comment_id );
 

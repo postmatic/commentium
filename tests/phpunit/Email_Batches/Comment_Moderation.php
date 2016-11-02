@@ -9,9 +9,9 @@ class Comment_Moderation extends WP_UnitTestCase {
 
 	public function test_defaults() {
 
-		$post = static::factory()->post->create_and_get();
+		$post = $this->factory->post->create_and_get();
 
-		$comment = static::factory()->comment->create( array( 'comment_post_ID' => $post->ID ) );
+		$comment = $this->factory->comment->create( array( 'comment_post_ID' => $post->ID ) );
 
 		$batch = new Email_Batches\Comment_Moderation( $comment );
 
@@ -33,12 +33,12 @@ class Comment_Moderation extends WP_UnitTestCase {
 
 	public function test_skip_incapable_recipients() {
 
-		$author = static::factory()->user->create_and_get( array( 'role' => 'author' ) );
-		$subscriber = static::factory()->user->create_and_get( array( 'role' => 'subscriber' ) );
+		$author = $this->factory->user->create_and_get( array( 'role' => 'author' ) );
+		$subscriber = $this->factory->user->create_and_get( array( 'role' => 'subscriber' ) );
 
-		$post = static::factory()->post->create_and_get( array( 'post_author' => $author->ID ) );
+		$post = $this->factory->post->create_and_get( array( 'post_author' => $author->ID ) );
 
-		$comment = static::factory()->comment->create( array( 'comment_post_ID' => $post->ID ) );
+		$comment = $this->factory->comment->create( array( 'comment_post_ID' => $post->ID ) );
 
 		$batch = new Email_Batches\Comment_Moderation( $comment );
 
