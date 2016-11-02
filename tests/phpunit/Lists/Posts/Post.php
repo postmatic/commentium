@@ -8,9 +8,9 @@ use WP_UnitTestCase;
 class Post extends WP_UnitTestCase {
 
 	function test_digest_exclusion() {
-		$sent_post = new Lists\Posts\Post( static::factory()->post->create() );
-		$exclude_post = new Lists\Posts\Post( static::factory()->post->create() );
-		$unsent_post_id = static::factory()->post->create();
+		$sent_post = new Lists\Posts\Post( $this->factory->post->create() );
+		$exclude_post = new Lists\Posts\Post( $this->factory->post->create() );
+		$unsent_post_id = $this->factory->post->create();
 
 		$check_posts = get_posts();
 
@@ -26,12 +26,12 @@ class Post extends WP_UnitTestCase {
 	}
 
 	function test_digest_discussion_mode_default() {
-		$post_list = new Lists\Posts\Post( static::factory()->post->create() );
+		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
 		$this->assertFalse( $post_list->in_digest_discussion_mode(), 'Expected post NOT to be in digest discussion mode.' );
 	}
 
 	function test_digest_discussion_mode_flood() {
-		$post_list = new Lists\Posts\Post( static::factory()->post->create() );
+		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
 
 		$post_list->set_flood_control_comment_id( 1 );
 
@@ -39,7 +39,7 @@ class Post extends WP_UnitTestCase {
 	}
 
 	function test_comment_digest_callback_id_default() {
-		$post_list = new Lists\Posts\Post( static::factory()->post->create() );
+		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
 
 		$this->assertNull(
 			$post_list->get_comment_digest_callback_id(),
@@ -48,7 +48,7 @@ class Post extends WP_UnitTestCase {
 	}
 
 	function test_set_comment_digest_callback_id() {
-		$post_list = new Lists\Posts\Post( static::factory()->post->create() );
+		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
 
 		$post_list->set_comment_digest_callback_id( 3 );
 
@@ -60,13 +60,13 @@ class Post extends WP_UnitTestCase {
 	}
 
 	function test_digested_comments_date_gmt_default() {
-		$post_list = new Lists\Posts\Post( static::factory()->post->create() );
+		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
 
 		$this->assertEquals( $post_list->get_wp_post()->post_date_gmt, $post_list->get_digested_comments_date_gmt() );
 	}
 
 	function test_set_digested_comments_date_gmt() {
-		$post_list = new Lists\Posts\Post( static::factory()->post->create() );
+		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
 
 		$test_date = get_gmt_from_date( 'yesterday' );
 
@@ -76,7 +76,7 @@ class Post extends WP_UnitTestCase {
 	}
 
 	function test_undigested_comments_date_clauses() {
-		$post_list = new Lists\Posts\Post( static::factory()->post->create() );
+		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
 
 		$digested_date = get_gmt_from_date( '3 hours ago' );
 
