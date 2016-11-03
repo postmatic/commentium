@@ -2,7 +2,7 @@
 /**
  * Template variables in scope:
  * @var array $comments Comments to be included in the digest
- * @var Postmatic\Premium\Lists\Posts\Post $post_list
+ * @var Postmatic\Commentium\Lists\Posts\Post $post_list
  */
 ?>
 

@@ -4,7 +4,7 @@
  * @var int $new_comment_count
  * @var array $new_comments
  * @var array $parent_comments
- * @var Postmatic\Premium\Lists\Posts\Post $post_list
+ * @var Postmatic\Commentium\Lists\Posts\Post $post_list
  * @var string $subscribed_post_title
  * @var string $subscribed_post_title_link
  * @var string $subscribed_post_author_name
