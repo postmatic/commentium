@@ -10,7 +10,7 @@ use Prompt_Enum_Email_Transports;
 class Factory extends No_Outbound_Test_Case {
 
 	public function test_make_default_comment_flood_controller() {
-		$comment = static::factory()->comment->create_and_get();
+		$comment = $this->factory->comment->create_and_get();
 		$basic_controller = new Prompt_Comment_Flood_Controller( $comment );
 		$controller = Filters\Factory::make_comment_flood_controller( $basic_controller, $comment );
 		$this->assertNotInstanceOf( 'Postmatic\Commentium\Flood_Controllers\Comment', $controller );
@@ -19,7 +19,7 @@ class Factory extends No_Outbound_Test_Case {
 	public function test_make_api_comment_flood_controller() {
 		Prompt_Core::$options->set( 'email_transport', Prompt_Enum_Email_Transports::API );
 		
-		$comment = static::factory()->comment->create_and_get();
+		$comment = $this->factory->comment->create_and_get();
 		$basic_controller = new Prompt_Comment_Flood_Controller( $comment );
 		$controller = Filters\Factory::make_comment_flood_controller( $basic_controller, $comment );
 		$this->assertInstanceOf( 'Postmatic\Commentium\Flood_Controllers\Comment', $controller );
