@@ -22,6 +22,8 @@ class Comment extends Mock_Mailer_Test_Case {
 	function setUp() {
 		parent::setUp();
 
+		\Prompt_Core::$options->set( 'auto_subscribe_authors', true );
+
 		$site_comments = new Prompt_Site_Comments();
 		$this->site_subscriber_id = $this->factory->user->create();
 		$site_comments->subscribe( $this->site_subscriber_id );
@@ -121,7 +123,7 @@ class Comment extends Mock_Mailer_Test_Case {
 	}
 
 	function test_direct_reply() {
-		
+
 		$parent_author_id = $this->factory->user->create();
 		
 		$this->post_list->subscribe( $parent_author_id );
