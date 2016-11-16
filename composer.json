@@ -14,6 +14,9 @@
       "role": "Developer"
     }
   ],
+  "require": {
+	  "postmatic/comment-iq-api-client": "^0.1.1"
+  },
   "autoload": {
 	  "psr-4": {
 		  "Postmatic\\Commentium\\": "source"
