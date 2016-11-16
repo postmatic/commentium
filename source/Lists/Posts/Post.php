@@ -1,9 +1,10 @@
 <?php
 namespace Postmatic\Commentium\Lists\Posts;
 
+use Postmatic\Commentium\Models\Comment_IQ_Article;
 use Prompt_Post;
 
-class Post extends Prompt_Post {
+class Post extends Prompt_Post implements Comment_IQ_Article {
 
 	/** @var string */
 	protected static $digest_meta_key = '_prompt_in_digest';
@@ -13,6 +14,8 @@ class Post extends Prompt_Post {
 	protected static $comment_digest_callback_id_meta_key = '_prompt_comment_digest_callback_id';
 	/** @var string */
 	protected static $digested_comments_date_gmt_meta_key = '_prompt_digested_comments_date_gmt';
+	/** @var string */
+	protected static $comment_iq_article_id_key = '_prompt_comment_iq_article_id';
 
 	/**
 	 * Record that this post has been included in a digest mailing.
@@ -116,6 +119,29 @@ class Post extends Prompt_Post {
 		return array(
 			array( 'column' => 'comment_date_gmt', 'after' => $this->get_digested_comments_date_gmt() )
 		);
+	}
+
+	/**
+	 * Get the comment IQ article ID.
+	 *
+	 * @since 0.1.0
+	 * @return int|null
+	 */
+	public function get_comment_iq_article_id() {
+		$id = get_post_meta( $this->id, static::$comment_iq_article_id_key, true );
+		return $id ? intval( $id ) : null;
+	}
+
+	/**
+	 * Set the comment IQ article ID.
+	 *
+	 * @since 0.1.0
+	 * @param int $id
+	 * @return $this
+	 */
+	public function set_comment_iq_article_id( $id ) {
+		update_post_meta( $this->id, static::$comment_iq_article_id_key, intval( $id ) );
+		return $this;
 	}
 
 	/**

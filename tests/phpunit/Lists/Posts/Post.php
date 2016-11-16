@@ -87,4 +87,21 @@ class Post extends WP_UnitTestCase {
 		$this->assertEquals( 'comment_date_gmt', $clauses[0]['column'], 'Expected digested comment GMT date column.' );
 		$this->assertEquals( $digested_date, $clauses[0]['after'], 'Expected digested date in after clause.' );
 	}
+
+	function test_article_id_default() {
+		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
+
+		$this->assertNull(
+			$post_list->get_comment_iq_article_id(),
+			'Expected no article ID by default.'
+		);
+	}
+
+	function test_set_article_id() {
+		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
+
+		$post_list->set_comment_iq_article_id( 13 );
+
+		$this->assertEquals( 13, $post_list->get_comment_iq_article_id(), 'Expected to get the ID that was set.' );
+	}
 }
