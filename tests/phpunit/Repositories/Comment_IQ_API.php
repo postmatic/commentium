@@ -27,7 +27,7 @@ class Comment_IQ_API extends PHPUnit_Framework_TestCase {
 			->with( $id );
 
 		$client_mock = $this->getMockBuilder( 'Postmatic\CommentIQ\API\Client' )
-			->setMethods( array( 'add_article' ) )
+			->setMethods( array( 'add_article', 'add_comment', 'update_article', 'update_comment' ) )
 			->getMock();
 
 		$client_mock->expects( $this->once() )
@@ -56,7 +56,7 @@ class Comment_IQ_API extends PHPUnit_Framework_TestCase {
 			->willReturn( $content );
 
 		$client_mock = $this->getMockBuilder( 'Postmatic\CommentIQ\API\Client' )
-			->setMethods( array( 'update_article' ) )
+			->setMethods( array( 'add_article', 'add_comment', 'update_article', 'update_comment' ) )
 			->getMock();
 
 		$client_mock->expects( $this->once() )
@@ -108,7 +108,7 @@ class Comment_IQ_API extends PHPUnit_Framework_TestCase {
 			->with( array( 'Foo' => 'Bar' ) );
 
 		$client_mock = $this->getMockBuilder( 'Postmatic\CommentIQ\API\Client' )
-			->setMethods( array( 'add_comment' ) )
+			->setMethods( array( 'add_article', 'add_comment', 'update_article', 'update_comment' ) )
 			->getMock();
 
 		$client_mock->expects( $this->once() )
@@ -152,7 +152,7 @@ class Comment_IQ_API extends PHPUnit_Framework_TestCase {
 			->willReturn( $username );
 
 		$client_mock = $this->getMockBuilder( 'Postmatic\CommentIQ\API\Client' )
-			->setMethods( array( 'update_comment' ) )
+			->setMethods( array( 'add_article', 'add_comment', 'update_article', 'update_comment' ) )
 			->getMock();
 
 		$client_mock->expects( $this->once() )
