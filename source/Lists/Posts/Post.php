@@ -127,9 +127,21 @@ class Post extends Prompt_Post implements Comment_IQ_Article {
 	 * @since 0.1.0
 	 * @return int|null
 	 */
-	public function get_comment_iq_article_id() {
+	public function get_comment_iq_id() {
 		$id = get_post_meta( $this->id, static::$comment_iq_article_id_key, true );
 		return $id ? intval( $id ) : null;
+	}
+
+	/**
+	 * Get the comment IQ article content.
+	 *
+	 * For a post, this is the post content.
+	 *
+	 * @since 0.1.0
+	 * @return int|null
+	 */
+	public function get_comment_iq_content() {
+		return $this->get_wp_post()->post_content;
 	}
 
 	/**
@@ -139,7 +151,7 @@ class Post extends Prompt_Post implements Comment_IQ_Article {
 	 * @param int $id
 	 * @return $this
 	 */
-	public function set_comment_iq_article_id( $id ) {
+	public function set_comment_iq_id( $id ) {
 		update_post_meta( $this->id, static::$comment_iq_article_id_key, intval( $id ) );
 		return $this;
 	}

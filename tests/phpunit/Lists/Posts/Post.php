@@ -92,7 +92,7 @@ class Post extends WP_UnitTestCase {
 		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
 
 		$this->assertNull(
-			$post_list->get_comment_iq_article_id(),
+			$post_list->get_comment_iq_id(),
 			'Expected no article ID by default.'
 		);
 	}
@@ -100,8 +100,20 @@ class Post extends WP_UnitTestCase {
 	function test_set_article_id() {
 		$post_list = new Lists\Posts\Post( $this->factory->post->create() );
 
-		$post_list->set_comment_iq_article_id( 13 );
+		$post_list->set_comment_iq_id( 13 );
 
-		$this->assertEquals( 13, $post_list->get_comment_iq_article_id(), 'Expected to get the ID that was set.' );
+		$this->assertEquals( 13, $post_list->get_comment_iq_id(), 'Expected to get the ID that was set.' );
 	}
+
+	function test_article_content() {
+		$content = 'XXCONTENTXX';
+		$post_list = new Lists\Posts\Post( $this->factory->post->create( array( 'post_content' => $content ) ) );
+
+		$this->assertEquals(
+			$content,
+			$post_list->get_comment_iq_content(),
+			'Expected article content to be post content.'
+		);
+	}
+
 }

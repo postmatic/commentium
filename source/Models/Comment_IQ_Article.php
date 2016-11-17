@@ -14,7 +14,15 @@ interface Comment_IQ_Article {
 	 * @since 0.1.0
 	 * @return int
 	 */
-	public function get_comment_iq_article_id();
+	public function get_comment_iq_id();
+
+	/**
+	 * Get the associated CommentIQ article content.
+	 *
+	 * @since 0.1.0
+	 * @return int
+	 */
+	public function get_comment_iq_content();
 
 	/**
 	 * Set the associated CommentIQ article ID.
@@ -23,5 +31,5 @@ interface Comment_IQ_Article {
 	 * @param int $id
 	 * @return $this
 	 */
-	public function set_comment_iq_article_id( $id );
+	public function set_comment_iq_id( $id );
 }
