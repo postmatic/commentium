@@ -2,9 +2,9 @@
 namespace Postmatic\Commentium\Unit_Tests\Models;
 
 use Postmatic\Commentium\Models;
-use WP_UnitTestCase;
+use Postmatic\Commentium\Unit_Tests\No_Outbound_Test_Case;
 
-class Comment extends WP_UnitTestCase {
+class Comment extends No_Outbound_Test_Case {
 
 	function test_get_missing_comment_iq_id() {
 		$comment = new Models\Comment( static::factory()->comment->create() );
