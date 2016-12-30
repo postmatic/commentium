@@ -4,6 +4,8 @@ namespace Postmatic\Commentium\Unit_Tests\Email_Batches;
 use Postmatic\Commentium\Lists;
 use Postmatic\Commentium\Email_Batches;
 use Prompt_Enum_Message_Types;
+use Prompt_Enum_Email_Transports;
+use Prompt_Core;
 use WP_UnitTestCase;
 
 class Comment_Digest extends WP_UnitTestCase {
@@ -151,6 +153,8 @@ class Comment_Digest extends WP_UnitTestCase {
 	}
 	
 	public function test_parent_rendering() {
+
+		Prompt_Core::$options->set( 'email_transport', Prompt_Enum_Email_Transports::API );
 
 		$post_list = new Lists\Posts\Post( $this->factory->post->create_and_get() );
 		
