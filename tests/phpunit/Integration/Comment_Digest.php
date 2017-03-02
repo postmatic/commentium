@@ -8,7 +8,7 @@ use Postmatic\Commentium\Repositories;
 use Postmatic\Commentium\Models;
 use Postmatic\Commentium\Mailers;
 use Prompt_Core;
-use Prompt_Enum_Email_Transports;
+use Prompt_Enum_Message_Types;
 
 class Comment_Digest extends Mock_Mailer_Test_Case {
 	
@@ -24,7 +24,7 @@ class Comment_Digest extends Mock_Mailer_Test_Case {
 
 	function setUp() {
 		parent::setUp(); 
-		Prompt_Core::$options->set( 'email_transport', Prompt_Enum_Email_Transports::API );
+		Prompt_Core::$options->set( 'enabled_message_types', array( Prompt_Enum_Message_Types::COMMENT_DIGEST ) );
 		Prompt_Core::$options->set( 'comment_flood_control_trigger_count', 2 );
 		
 		add_filter( 'prompt/make_comment_flood_controller', array( $this, 'make_flood_controller' ), 10, 2 );

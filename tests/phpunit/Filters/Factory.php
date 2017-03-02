@@ -5,7 +5,7 @@ use Postmatic\Commentium\Unit_Tests\No_Outbound_Test_Case;
 use Postmatic\Commentium\Filters;
 use Prompt_Comment_Flood_Controller;
 use Prompt_Core;
-use Prompt_Enum_Email_Transports;
+use Prompt_Enum_Message_Types;
 
 class Factory extends No_Outbound_Test_Case {
 
@@ -17,7 +17,7 @@ class Factory extends No_Outbound_Test_Case {
 	}
 
 	public function test_make_api_comment_flood_controller() {
-		Prompt_Core::$options->set( 'email_transport', Prompt_Enum_Email_Transports::API );
+		Prompt_Core::$options->set( 'enabled_message_types', array( Prompt_Enum_Message_Types::COMMENT_DIGEST ) );
 		
 		$comment = $this->factory->comment->create_and_get();
 		$basic_controller = new Prompt_Comment_Flood_Controller( $comment );
