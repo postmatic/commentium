@@ -27,15 +27,6 @@
 <div class="primary-comment comment padded">
 	<div class="comment-header">
 		<?php echo get_avatar( $comment ); ?>
-		<div class="author-name"><p>
-			<a href="http://<?php echo $comment_author_domain; ?>"><?php echo $comment->comment_author; ?></a>
-
-		(<?php echo $comment->comment_author_email; ?><br /><a href="http://whois.arin.net/rest/ip/<?php echo $comment->comment_author_IP; ?>">
-			<?php echo $comment->comment_author_IP; ?>
-		</a> |
-		<a href="http://<?php echo $comment_author_domain; ?>"><?php echo $comment_author_domain; ?></a>
-		)
-	</p></div>
 
 		<div class="comment-body">
 			<em><?php echo wpautop( $comment->comment_content ); ?></em>
