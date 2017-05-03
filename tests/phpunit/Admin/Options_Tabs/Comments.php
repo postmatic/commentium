@@ -17,6 +17,7 @@ class Comments extends WP_UnitTestCase {
 
 		$this->assertContains( 'Comment flood control', $content, 'Expected the old flood control title.' );
 		$this->assertContains( 'comment_flood_control_trigger_count', $content, 'Expected the same flood control field name.' );
+		$this->assertNotContains( 'enable_replies_only', $content, 'Expected no replies only field.' );
 	}
 	
 	public function test_render_api() {
@@ -28,6 +29,7 @@ class Comments extends WP_UnitTestCase {
 
 		$this->assertContains( 'Comment digests', $content, 'Expected a new flood control title.' );
 		$this->assertContains( 'comment_flood_control_trigger_count', $content, 'Expected the same flood control field name.' );
+        $this->assertContains( 'enable_replies_only', $content, 'Expected the replies only field.' );
 	}
 
 }
