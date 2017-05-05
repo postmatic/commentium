@@ -32,4 +32,25 @@ class Comments extends WP_UnitTestCase {
         $this->assertContains( 'enable_replies_only', $content, 'Expected the replies only field.' );
 	}
 
+	public function test_disable_replies_only() {
+        $tab = new Options_Tabs\Comments( Prompt_Core::$options );
+
+        $new_data = [ 'comment_flood_control_trigger_count' => 3 ];
+        $old_data = [ 'enable_replies_only' => true ];
+
+        $valid_data = $tab->validate( $new_data, $old_data );
+
+        $this->assertFalse( $valid_data['enable_replies_only'], 'Expected replies only to be disabled.' );
+    }
+
+	public function test_enable_replies_only() {
+        $tab = new Options_Tabs\Comments( Prompt_Core::$options );
+
+        $new_data = [ 'comment_flood_control_trigger_count' => 3, 'enable_replies_only' => true ];
+        $old_data = [ 'enable_replies_only' => false ];
+
+        $valid_data = $tab->validate( $new_data, $old_data );
+
+        $this->assertTrue( $valid_data['enable_replies_only'], 'Expected replies only to be enabled.' );
+    }
 }

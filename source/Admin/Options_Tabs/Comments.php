@@ -5,7 +5,14 @@ use Prompt_Admin_Comment_Options_Tab;
 
 class Comments extends Prompt_Admin_Comment_Options_Tab {
 
-	protected function table_entries() {
+    public function validate($new_data, $old_data)
+    {
+        $valid_data = $this->validate_checkbox_fields( $new_data, $old_data, [ 'enable_replies_only'] );
+
+        return array_merge( parent::validate($new_data, $old_data), $valid_data );
+    }
+
+    protected function table_entries() {
 		$entries = parent::table_entries();
 
 		if ( ! $this->options->is_api_transport() ) {
