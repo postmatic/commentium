@@ -3,15 +3,74 @@ namespace Postmatic\Commentium\Admin\Options_Tabs;
 
 use Prompt_Admin_Comment_Options_Tab;
 
+/**
+ * Commentium comment option customizations.
+ */
 class Comments extends Prompt_Admin_Comment_Options_Tab {
 
-    public function validate($new_data, $old_data)
+    /**
+     * Render Commentium comment options.
+     *
+     * @since 1.0.1
+     * @return string
+     */
+    public function render()
     {
-        $valid_data = $this->validate_checkbox_fields( $new_data, $old_data, [ 'enable_replies_only'] );
-
-        return array_merge( parent::validate($new_data, $old_data), $valid_data );
+        $script = $this->options->is_api_transport() ? $this->render_script() : '';
+        return parent::render() . $script;
     }
 
+    /**
+     * Validate Commentium comment options.
+     *
+     * @since 1.0.1
+     * @param array $new_data
+     * @param array $old_data
+     *
+     * @return array
+     */
+    public function validate($new_data, $old_data)
+    {
+        $old_data = $this->validate_checkbox_fields( $new_data, $old_data, [ 'enable_replies_only'] );
+
+        $valid_data['enable_replies_only'] = $old_data['enable_replies_only'];
+
+        $valid_data = array_merge( parent::validate($new_data, $old_data), $valid_data );
+        return $valid_data;
+    }
+
+    /**
+     * Render Commentium comment options javascript.
+     *
+     * @since 1.0.1
+     * @return string
+     */
+    protected function render_script() {
+        return '
+            <script>
+            jQuery(function( $ ) {
+                var $digest_row = $("#prompt-settings-comment-delivery table tbody tr").eq(3);
+                var $replies_only_box = $("input[name=enable_replies_only]").on("change",show_digest_row);
+                show_digest_row();
+                
+                function show_digest_row() {
+                    if ( $replies_only_box.is(":checked") ) {
+                        $digest_row.hide();
+                    } else {
+                        $digest_row.show();
+                    }
+                }
+            });
+            </script>
+        ';
+    }
+
+    /**
+     * Render commentium comment options.
+     *
+     * @since 1.0.1
+     * @return array
+     */
     protected function table_entries() {
 		$entries = parent::table_entries();
 
