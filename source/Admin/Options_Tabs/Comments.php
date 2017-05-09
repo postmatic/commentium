@@ -31,9 +31,13 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
      */
     public function validate($new_data, $old_data)
     {
-        $old_data = $this->validate_checkbox_fields( $new_data, $old_data, [ 'enable_replies_only'] );
+        $checkbox_data = $this->validate_checkbox_fields( $new_data, $old_data, [ 'enable_replies_only'] );
 
-        $valid_data['enable_replies_only'] = $old_data['enable_replies_only'];
+        $valid_data['enable_replies_only'] = $checkbox_data['enable_replies_only'];
+
+        if ( $checkbox_data['enable_replies_only'] && !$old_data['enable_replies_only'] ) {
+            $valid_data['comment_flood_control_trigger_count'] = 1;
+        }
 
         $valid_data = array_merge( parent::validate($new_data, $old_data), $valid_data );
         return $valid_data;
