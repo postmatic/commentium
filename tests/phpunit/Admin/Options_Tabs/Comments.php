@@ -70,6 +70,6 @@ class Comments extends WP_UnitTestCase {
         $valid_data = $tab->validate( $new_data, $old_data );
 
         $this->assertTrue( $valid_data['enable_replies_only'], 'Expected replies only to be enabled.' );
-        $this->assertEquals( 1, $valid_data['comment_flood_control_trigger_count'], 'Expected trigger count to be 1.' );
+        $this->assertEquals( 0, $valid_data['comment_flood_control_trigger_count'], 'Expected trigger count to be 0.' );
     }
 }
