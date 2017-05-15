@@ -95,7 +95,7 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
 
 		$replies_only_entry = [
 		    [
-                'title' => __( 'Replies Only', 'postmatic-premium' ),
+                'title' => __( 'Send Replies Only', 'postmatic-premium' ),
                 'type' => 'checkbox',
                 'name' => 'enable_replies_only',
                 'desc' => __(
