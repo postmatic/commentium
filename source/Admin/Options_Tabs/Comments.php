@@ -99,7 +99,7 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
                 'type' => 'checkbox',
                 'name' => 'enable_replies_only',
                 'desc' => __(
-                    'Only send notifications to comment authors when someone replies to their comment.',
+                    'Only send notifications to comment authors when someone replies to their comment. If you enable this you may want to check the language in the comment form opt-in text (above).',
                     'commentium'
                 )
             ]
