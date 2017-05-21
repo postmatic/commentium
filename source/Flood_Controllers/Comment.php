@@ -7,6 +7,7 @@ use Postmatic\Commentium\Models;
 use Prompt_Comment_Flood_Controller;
 use Prompt_Site_Comments;
 use Prompt_Core;
+use Prompt_Options;
 
 /**
  * Comment digest flood control
@@ -19,18 +20,30 @@ class Comment extends Prompt_Comment_Flood_Controller {
 	 * @var Repositories\Scheduled_Callback_HTTP
 	 */
 	protected $callback_repo;
+    /**
+     * @since 1.0.1
+     * @var Prompt_Options
+     */
+	protected $options;
 
 	/**
 	 * @since 0.4.0
+     * @since 1.0.1 Added options
 	 * @param $comment
 	 * @param Repositories\Scheduled_Callback_HTTP|null $callback_repo
+     * @param Prompt_Options $options
 	 */
-	public function __construct( $comment, Repositories\Scheduled_Callback_HTTP $callback_repo = null ) {
+	public function __construct(
+	    $comment,
+        Repositories\Scheduled_Callback_HTTP $callback_repo = null,
+        Prompt_Options $options = null
+    ) {
 
 		parent::__construct( $comment );
 
 		$this->prompt_post = new Lists\Posts\Post( $this->prompt_post->id() );
 		$this->callback_repo = $callback_repo ?: new Repositories\Scheduled_Callback_HTTP();
+		$this->options = $options ?: Prompt_Core::$options;
 	}
 
 	/**
@@ -52,7 +65,9 @@ class Comment extends Prompt_Comment_Flood_Controller {
 			return parent::control_recipient_ids();
 		}
 
-		$this->ensure_comment_digest_schedule();
+		if ( !$this->options->get( 'enable_replies_only' ) ) {
+            $this->ensure_comment_digest_schedule();
+        }
 
 		return $this->all_ids_except( $this->get_author_id( $this->comment ), $this->single_notice_recipient_ids() );
 	}
@@ -127,7 +142,7 @@ class Comment extends Prompt_Comment_Flood_Controller {
 		$site_comments = new Prompt_Site_Comments();
 		$recipient_ids = $site_comments->subscriber_ids();
 
-		if ( Prompt_Core::$options->get( 'auto_subscribe_authors' ) ) {
+		if ( $this->options->get( 'auto_subscribe_authors' ) ) {
 			$recipient_ids[] = $this->prompt_post->get_wp_post()->post_author;
 		}
 

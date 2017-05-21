@@ -1,7 +1,8 @@
 {
   "name": "postmatic/commentium",
   "type": "library",
-  "licencse": "GPL-2.0+",
+  "license": "GPL-2.0+",
+	"version": "1.0.1",
   "authors": [
     {
       "name": "Postmatic",
