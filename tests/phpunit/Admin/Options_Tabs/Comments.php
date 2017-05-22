@@ -33,13 +33,21 @@ class Comments extends WP_UnitTestCase {
 		$this->assertNotContains( '<script', $content, 'Expected no inline script in content.' );
 	}
 	
-	public function test_render_api() {
+	public function test_render_api_with_author_subscribe() {
 
-        $this->options_mock->expects( $this->any() )
+        $options_mock = $this->getMockBuilder( Prompt_Options::class )->disableOriginalConstructor()->getMock();
+
+        $options_mock->expects( $this->any() )
             ->method( 'is_api_transport' )
             ->willReturn( true );
 
-		$tab = new Options_Tabs\Comments( $this->options_mock );
+        $options_mock->expects( $this->any() )
+            ->method( 'get' )
+            ->willReturnCallback( function( $name = null, $default = null ) {
+                return ( $name === 'enabled_message_types' ) ? [ Prompt_Enum_Message_Types::COMMENT_MODERATION ] : [];
+            });
+
+		$tab = new Options_Tabs\Comments( $options_mock );
 
 		$content = $tab->render();
 
@@ -47,6 +55,36 @@ class Comments extends WP_UnitTestCase {
 		$this->assertContains( 'comment_flood_control_trigger_count', $content, 'Expected the same flood control field name.' );
         $this->assertContains( 'enable_replies_only', $content, 'Expected the replies only field.' );
         $this->assertContains( '<script', $content, 'Expected inline script in content.' );
+        $this->assertContains( 'auto_subscribe_authors', $content, 'Expected the author auto-subscribe field.' );
+	}
+
+	public function test_render_api_without_author_subscribe() {
+
+        $options_mock = $this->getMockBuilder( Prompt_Options::class )->disableOriginalConstructor()->getMock();
+
+        $options_mock->expects( $this->any() )
+            ->method( 'is_api_transport' )
+            ->willReturn( true );
+
+        $options_mock->expects( $this->any() )
+            ->method( 'get' )
+            ->willReturnCallback( function( $name = null, $default = null ) {
+                $moderation_and_post_types = [
+                    Prompt_Enum_Message_Types::COMMENT_MODERATION,
+                    Prompt_Enum_Message_Types::POST
+                ];
+                return ( $name === 'enabled_message_types' ) ? $moderation_and_post_types : [];
+            });
+
+		$tab = new Options_Tabs\Comments( $options_mock );
+
+		$content = $tab->render();
+
+		$this->assertContains( 'Comment digests', $content, 'Expected a new flood control title.' );
+		$this->assertContains( 'comment_flood_control_trigger_count', $content, 'Expected the same flood control field name.' );
+        $this->assertContains( 'enable_replies_only', $content, 'Expected the replies only field.' );
+        $this->assertContains( '<script', $content, 'Expected inline script in content.' );
+        $this->assertNotContains( 'auto_subscribe_authors', $content, 'Expected the author auto-subscribe field.' );
 	}
 
 	public function test_disable_replies_only() {
@@ -71,5 +109,27 @@ class Comments extends WP_UnitTestCase {
 
         $this->assertTrue( $valid_data['enable_replies_only'], 'Expected replies only to be enabled.' );
         $this->assertEquals( 0, $valid_data['comment_flood_control_trigger_count'], 'Expected trigger count to be 0.' );
+    }
+
+	public function test_disable_author_subscribe() {
+        $tab = new Options_Tabs\Comments( $this->options_mock );
+
+        $new_data = [ 'comment_flood_control_trigger_count' => 3 ];
+        $old_data = [ 'auto_subscribe_authors' => true ];
+
+        $valid_data = $tab->validate( $new_data, $old_data );
+
+        $this->assertFalse( $valid_data['auto_subscribe_authors'], 'Expected author subscribe to be disabled.' );
+    }
+
+	public function test_enable_author_subscribe() {
+        $tab = new Options_Tabs\Comments( $this->options_mock );
+
+        $new_data = [ 'comment_flood_control_trigger_count' => 3, 'auto_subscribe_authors' => true ];
+        $old_data = [ 'auto_subscribe_authors' => false ];
+
+        $valid_data = $tab->validate( $new_data, $old_data );
+
+        $this->assertTrue( $valid_data['auto_subscribe_authors'], 'Expected author subscribe to be enabled.' );
     }
 }
