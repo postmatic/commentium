@@ -2,6 +2,7 @@
 namespace Postmatic\Commentium\Admin\Options_Tabs;
 
 use Prompt_Admin_Comment_Options_Tab;
+use Prompt_Enum_Message_Types;
 
 /**
  * Commentium comment option customizations.
@@ -31,9 +32,13 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
      */
     public function validate($new_data, $old_data)
     {
-        $checkbox_data = $this->validate_checkbox_fields( $new_data, $old_data, [ 'enable_replies_only'] );
+        $checkbox_data = $this->validate_checkbox_fields( $new_data, $old_data, [
+            'enable_replies_only',
+            'auto_subscribe_authors'
+        ] );
 
         $valid_data['enable_replies_only'] = $checkbox_data['enable_replies_only'];
+        $valid_data['auto_subscribe_authors'] = $checkbox_data['auto_subscribe_authors'];
 
         if ( $checkbox_data['enable_replies_only'] && !$old_data['enable_replies_only'] ) {
             $valid_data['comment_flood_control_trigger_count'] = 0;
@@ -105,8 +110,41 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
             ]
         ];
 
-		array_splice( $entries, 2, 0, $replies_only_entry );
+        array_splice( $entries, 2, 0, $replies_only_entry );
+
+		if ( $this->is_moderation_enabled_but_not_post_delivery() ) {
+		    $author_subscribe_entry = [
+		        [
+                    'title' => __( 'Author Subscriptions', 'commentium' ),
+                    'type' => 'checkbox',
+                    'name' => 'auto_subscribe_authors',
+                    'desc' => __(
+                            'Subscribe authors to comments on their own posts.<small>(Recommended)</small>',
+                            'commentium'
+                        ) . html( 'p',
+                            __(
+                                'This will automatically subscribe post authors to new comment notifications on their posts. This works well to keep the author up to date with the latest comments and discussion.',
+                                'commentium'
+                            )
+                        ),
+                ]
+			];
+
+		    array_splice( $entries, 3, 0, $author_subscribe_entry );
+        }
 
 		return $entries;
 	}
+
+    /**
+     * @since 1.0.2
+     * @return bool
+     */
+	protected function is_moderation_enabled_but_not_post_delivery() {
+        $enabled_message_types = $this->options->get( 'enabled_message_types' );
+
+        return in_array( Prompt_Enum_Message_Types::COMMENT_MODERATION, $enabled_message_types, true ) &&
+               !in_array( Prompt_Enum_Message_Types::POST, $enabled_message_types, true );
+    }
+
 }
