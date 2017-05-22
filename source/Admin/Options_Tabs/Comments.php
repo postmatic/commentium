@@ -130,7 +130,7 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
                 ]
 			];
 
-		    array_splice( $entries, 3, 0, $author_subscribe_entry );
+		    array_splice( $entries, 4, 0, $author_subscribe_entry );
         }
 
 		return $entries;
