@@ -15,10 +15,10 @@ class Comments extends WP_UnitTestCase {
 
     public function setUp() {
         parent::setUp();
-        $this->options_mock = $this->getMockBuilder( Prompt_Options::class )->disableOriginalConstructor()->getMock();
+        $this->options_mock = $this->getMockBuilder( 'Prompt_Options' )->disableOriginalConstructor()->getMock();
         $this->options_mock->expects($this->any())
                            ->method('get')
-                           ->willReturn([]);
+                           ->willReturn(array());
     }
 
 	public function test_render_local() {
@@ -35,7 +35,7 @@ class Comments extends WP_UnitTestCase {
 	
 	public function test_render_api_with_author_subscribe() {
 
-        $options_mock = $this->getMockBuilder( Prompt_Options::class )->disableOriginalConstructor()->getMock();
+        $options_mock = $this->getMockBuilder( 'Prompt_Options' )->disableOriginalConstructor()->getMock();
 
         $options_mock->expects( $this->any() )
             ->method( 'is_api_transport' )
@@ -44,7 +44,7 @@ class Comments extends WP_UnitTestCase {
         $options_mock->expects( $this->any() )
             ->method( 'get' )
             ->willReturnCallback( function( $name = null, $default = null ) {
-                return ( $name === 'enabled_message_types' ) ? [ Prompt_Enum_Message_Types::COMMENT_MODERATION ] : [];
+                return ( $name === 'enabled_message_types' ) ? array( Prompt_Enum_Message_Types::COMMENT_MODERATION ) : array();
             });
 
 		$tab = new Options_Tabs\Comments( $options_mock );
@@ -60,7 +60,7 @@ class Comments extends WP_UnitTestCase {
 
 	public function test_render_api_without_author_subscribe() {
 
-        $options_mock = $this->getMockBuilder( Prompt_Options::class )->disableOriginalConstructor()->getMock();
+        $options_mock = $this->getMockBuilder( 'Prompt_Options' )->disableOriginalConstructor()->getMock();
 
         $options_mock->expects( $this->any() )
             ->method( 'is_api_transport' )
@@ -69,11 +69,11 @@ class Comments extends WP_UnitTestCase {
         $options_mock->expects( $this->any() )
             ->method( 'get' )
             ->willReturnCallback( function( $name = null, $default = null ) {
-                $moderation_and_post_types = [
+                $moderation_and_post_types = array(
                     Prompt_Enum_Message_Types::COMMENT_MODERATION,
                     Prompt_Enum_Message_Types::POST
-                ];
-                return ( $name === 'enabled_message_types' ) ? $moderation_and_post_types : [];
+                );
+                return ( $name === 'enabled_message_types' ) ? $moderation_and_post_types : array();
             });
 
 		$tab = new Options_Tabs\Comments( $options_mock );
@@ -90,8 +90,8 @@ class Comments extends WP_UnitTestCase {
 	public function test_disable_replies_only() {
         $tab = new Options_Tabs\Comments( $this->options_mock );
 
-        $new_data = [ 'comment_flood_control_trigger_count' => 3 ];
-        $old_data = [ 'enable_replies_only' => true ];
+        $new_data = array( 'comment_flood_control_trigger_count' => 3 );
+        $old_data = array( 'enable_replies_only' => true );
 
         $valid_data = $tab->validate( $new_data, $old_data );
 
@@ -102,8 +102,8 @@ class Comments extends WP_UnitTestCase {
 	public function test_enable_replies_only() {
         $tab = new Options_Tabs\Comments( $this->options_mock );
 
-        $new_data = [ 'comment_flood_control_trigger_count' => 3, 'enable_replies_only' => true ];
-        $old_data = [ 'enable_replies_only' => false ];
+        $new_data = array( 'comment_flood_control_trigger_count' => 3, 'enable_replies_only' => true );
+        $old_data =  array( 'enable_replies_only' => false );
 
         $valid_data = $tab->validate( $new_data, $old_data );
 
@@ -114,8 +114,8 @@ class Comments extends WP_UnitTestCase {
 	public function test_disable_author_subscribe() {
         $tab = new Options_Tabs\Comments( $this->options_mock );
 
-        $new_data = [ 'comment_flood_control_trigger_count' => 3 ];
-        $old_data = [ 'auto_subscribe_authors' => true ];
+        $new_data = array( 'comment_flood_control_trigger_count' => 3 );
+        $old_data = array( 'auto_subscribe_authors' => true );
 
         $valid_data = $tab->validate( $new_data, $old_data );
 
@@ -125,8 +125,8 @@ class Comments extends WP_UnitTestCase {
 	public function test_enable_author_subscribe() {
         $tab = new Options_Tabs\Comments( $this->options_mock );
 
-        $new_data = [ 'comment_flood_control_trigger_count' => 3, 'auto_subscribe_authors' => true ];
-        $old_data = [ 'auto_subscribe_authors' => false ];
+        $new_data = array(  'comment_flood_control_trigger_count' => 3, 'auto_subscribe_authors' => true  );
+        $old_data = array(  'auto_subscribe_authors' => false  );
 
         $valid_data = $tab->validate( $new_data, $old_data );
 

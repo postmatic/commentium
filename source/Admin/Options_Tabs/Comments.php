@@ -32,10 +32,10 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
      */
     public function validate($new_data, $old_data)
     {
-        $checkbox_data = $this->validate_checkbox_fields( $new_data, $old_data, [
+        $checkbox_data = $this->validate_checkbox_fields( $new_data, $old_data, array(
             'enable_replies_only',
             'auto_subscribe_authors'
-        ] );
+        ) );
 
         $valid_data['enable_replies_only'] = $checkbox_data['enable_replies_only'];
         $valid_data['auto_subscribe_authors'] = $checkbox_data['auto_subscribe_authors'];
@@ -98,8 +98,8 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
 			)
 		);
 
-		$replies_only_entry = [
-		    [
+		$replies_only_entry = array(
+		    array(
                 'title' => __( 'Send Replies Only', 'postmatic-premium' ),
                 'type' => 'checkbox',
                 'name' => 'enable_replies_only',
@@ -107,14 +107,14 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
                     'Only send notifications to comment authors when someone replies to their comment. If you enable this you may want to check the language in the comment form opt-in text (above).',
                     'commentium'
                 )
-            ]
-        ];
+            )
+        );
 
         array_splice( $entries, 2, 0, $replies_only_entry );
 
 		if ( $this->is_moderation_enabled_but_not_post_delivery() ) {
-		    $author_subscribe_entry = [
-		        [
+		    $author_subscribe_entry = array(
+		        array(
                     'title' => __( 'Author Subscriptions', 'commentium' ),
                     'type' => 'checkbox',
                     'name' => 'auto_subscribe_authors',
@@ -127,8 +127,8 @@ class Comments extends Prompt_Admin_Comment_Options_Tab {
                                 'commentium'
                             )
                         ),
-                ]
-			];
+                )
+			);
 
 		    array_splice( $entries, 4, 0, $author_subscribe_entry );
         }
