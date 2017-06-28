@@ -38,7 +38,7 @@ class Options_Page {
 
 		$last_tab = $tabs[count($tabs)-1];
 
-		if ( 'Prompt_Admin_Comment_Options_Tab' === get_class( $last_tab ) and Prompt_Core::$options->is_api_transport() ) {
+		if ( 'Prompt_Admin_Comment_Options_Tab' === get_class( $last_tab ) ) { //and Prompt_Core::$options->is_api_transport() ) {
 			array_pop( $tabs );
 			$tabs[] = new Options_Tabs\Comments( Prompt_Core::$options );
 		}
