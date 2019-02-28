@@ -59,12 +59,14 @@ class Comment_Digest extends WP_UnitTestCase {
 
 		$digested_comment = $this->factory->comment->create_and_get( array(
 			'comment_post_ID' => $post_list->id(),
-			'comment_date_gmt' => get_gmt_from_date( '2 hours ago' )
+			'comment_date_gmt' => get_gmt_from_date( '2 hours ago' ),
+            'comment_type' => 'comment'
 		) );
 
 		$undigested_comment = $this->factory->comment->create_and_get( array(
 			'comment_post_ID' => $post_list->id(),
-			'comment_date_gmt' => get_gmt_from_date( 'now' )
+			'comment_date_gmt' => get_gmt_from_date( 'now' ),
+            'comment_type' => 'comment'
 		) );
 
 		$batch = new Email_Batches\Comment_Digest( $post_list );
