@@ -1,6 +1,7 @@
 <?php
 /**
- * Template variables in scope: * @var array $comments Comments to be included in the digest
+ * Template variables in scope:
+ * @var array $comments Comments to be included in the digest
  * @var int $new_comment_count
  * @var array $new_comments
  * @var array $parent_comments
@@ -15,15 +16,24 @@
 	<?php echo get_the_post_thumbnail( $post_list->id(), 'thumb' ); ?>
 	<h4>
 		<?php
-		printf(
-			_n(
-				'There is %d new comment on <em>%s</em>.',
-				'There are %d new comments on <em>%s</em>.', 
-				$new_comment_count,
-				'Postmatic' 
+		echo wp_kses_post(
+			apply_filters(
+				'replyable_template_comment_digest_html_header',
+				sprintf(
+					/* translators: %1$d is comment count, %2$s is Post Title */
+					_n(
+						'There is %1$d new comment on <em>%2$s</em>.',
+						'There are %1$d new comments on <em>%2$s</em>.',
+						$new_comment_count,
+						'Postmatic'
+					),
+					$new_comment_count,
+					$subscribed_post_title
+				)
 			),
 			$new_comment_count,
-			$subscribed_post_title
+			$subscribed_post_title,
+			$post_list->id()
 		);
 		?>
 	</h4>
@@ -43,8 +53,15 @@
 		     align="left" style="float: left; margin-right: 10px;"/>
 		<p class="reply">
 			<?php
-			_e( 'Reply to this email to add a comment. Your email address will not be shown.', 'Postmatic' );
-			?><br/>
+			echo wp_kses_post(
+				apply_filters(
+					'replyable_template_comment_digest_html_reply',
+					__( 'Reply to this email to add a comment. Your email address will not be shown.', 'Postmatic' ),
+					$post_list->id()
+				)
+			);
+			?>
+			<br/>
 			<small>
 				<?php
 				printf(
@@ -60,7 +77,17 @@
 	</div>
 
 	<div class="context padded">
-		<h3><?php _e( 'Here\'s a recap of this post and conversation:', 'Postmatic' ); ?></h3>
+		<h3>
+			<?php
+			echo wp_kses_post(
+				apply_filters(
+					'replyable_template_comment_digest_html_recap',
+					__( 'Here\'s a recap of this post and conversation:', 'Postmatic' ),
+					$post_list->id()
+				)
+			);
+			?>
+		</h3>
 
 		<p>
 			<?php
