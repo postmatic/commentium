@@ -97,7 +97,7 @@ class Comment_Moderation extends Prompt_Email_Batch {
 	public function add_recipient_addresses( $addresses ) {
 
 		/**
-		 * Filter: replyable_moderation_recipient_addresses
+		 * Filter: replyable/moderation/recipient_addresses
 		 *
 		 * Allow for extra recipients.
 		 *
@@ -107,7 +107,7 @@ class Comment_Moderation extends Prompt_Email_Batch {
 		 * @param int   Comment ID.
 		 * @param int   Comment Post ID.
 		 */
-		$addresses = apply_filters( 'replyable_moderation_recipient_addresses', $addresses, $this->comment->comment_ID, $this->comment->comment_post_ID );
+		$addresses = apply_filters( 'replyable/moderation/recipient_addresses', $addresses, $this->comment->comment_ID, $this->comment->comment_post_ID ); //phpcs:ignore
 
 		foreach ( $addresses as $recipient_address ) {
 
