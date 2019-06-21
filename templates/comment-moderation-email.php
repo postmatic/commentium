@@ -14,8 +14,8 @@
 <h3 class="padded">
 	<?php
 	echo wp_kses_post(
-		apply_filters(
-			'replyable_template_comment_moderation_html_heading',
+		apply_filters( // phpcs:ignore
+			'replyable/template/comment_moderation/html_heading',
 			sprintf(
 				__( 'There is a new comment to moderate from <span class="capitalize">%s</span>.', 'postmatic-premium' ),
 				$commenter_name
@@ -64,8 +64,8 @@
 	<li>
 		<?php
 		echo wp_kses_post(
-			apply_filters(
-				'replyable_template_comment_moderation_html_reply',
+			apply_filters( // phpcs:ignore
+				'replyable/template/comment_moderation/html_reply',
 				__( '<strong>Approve and Reply</strong>: Reply to this email with your response to both approve this comment and reply to it.', 'postmatic-premium' ),
 				$post
 			)
@@ -92,8 +92,8 @@
 	</li>
 	<li><a href="<?php echo admin_url( 'comment.php?action=editcomment&c=' . $comment->comment_ID ); ?>"><?php
 			echo wp_kses_post(
-				apply_filters(
-					'replyable_template_comment_moderation_html_browser',
+				apply_filters( //phpcs:ignore
+					'replyable/template/comment_moderation/html_browser',
 					__( 'Moderate this comment in your web browser', 'Postmatic' ),
 					$post
 				)

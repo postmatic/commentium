@@ -17,8 +17,8 @@
 	<h4>
 		<?php
 		echo wp_kses_post(
-			apply_filters(
-				'replyable_template_comment_digest_html_header',
+			apply_filters( // phpcs:ignore
+				'replyable/template/comment_digest/html_header',
 				sprintf(
 					/* translators: %1$d is comment count, %2$s is Post Title */
 					_n(
@@ -54,8 +54,8 @@
 		<p class="reply">
 			<?php
 			echo wp_kses_post(
-				apply_filters(
-					'replyable_template_comment_digest_html_reply',
+				apply_filters( //phpcs:ignore
+					'replyable/template/comment_digest/html_reply',
 					__( 'Reply to this email to add a comment. Your email address will not be shown.', 'Postmatic' ),
 					$post_list->id()
 				)
@@ -80,8 +80,8 @@
 		<h3>
 			<?php
 			echo wp_kses_post(
-				apply_filters(
-					'replyable_template_comment_digest_html_recap',
+				apply_filters( //phpcs:ignore
+					'replyable/template/comment_digest/html_recap',
 					__( 'Here\'s a recap of this post and conversation:', 'Postmatic' ),
 					$post_list->id()
 				)

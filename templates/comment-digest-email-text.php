@@ -12,7 +12,7 @@
 	$comments_count = wp_count_comments( $post_list->id() )->approved - count( $comments );
 	echo wp_kses_post(
 		apply_filters(
-			'replyable_template_comment_digest_text_header',
+			'replyable/template/comment_digest/text_header',
 			sprintf(
 				__( 'There were <a href="%1$s">%2$d comments</a> previous to these. Here\'s the latest discussion:', 'Postmatic' ),
 				$permalink . '#comments',
@@ -39,8 +39,8 @@
 <p>
 	<?php
 	echo wp_kses_post(
-		apply_filters(
-			'replyable_template_comment_digest_text_reply',
+		apply_filters( //phpcs:ignore
+			'replyable/template/comment_digest/text_reply',
 			__( '* Reply to this email to add a new comment. *', 'Postmatic' ),
 			$post_list->id()
 		)
