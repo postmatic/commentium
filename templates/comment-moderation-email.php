@@ -67,7 +67,8 @@
 			apply_filters( // phpcs:ignore
 				'replyable/template/comment_moderation/html_reply',
 				__( '<strong>Approve and Reply</strong>: Reply to this email with your response to both approve this comment and reply to it.', 'postmatic-premium' ),
-				$post
+				$post,
+				$comment
 			)
 		);
 		?>
@@ -95,7 +96,8 @@
 				apply_filters( //phpcs:ignore
 					'replyable/template/comment_moderation/html_browser',
 					__( 'Moderate this comment in your web browser', 'Postmatic' ),
-					$post
+					$post,
+					$comment
 				)
 			);
 		?></a></li>

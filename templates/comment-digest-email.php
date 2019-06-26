@@ -33,7 +33,8 @@
 			),
 			$new_comment_count,
 			$subscribed_post_title,
-			$post_list->id()
+			$post_list->id(),
+			$comments
 		);
 		?>
 	</h4>
@@ -57,7 +58,8 @@
 				apply_filters( //phpcs:ignore
 					'replyable/template/comment_digest/html_reply',
 					__( 'Reply to this email to add a comment. Your email address will not be shown.', 'Postmatic' ),
-					$post_list->id()
+					$post_list->id(),
+					$comments
 				)
 			);
 			?>
@@ -83,7 +85,8 @@
 				apply_filters( //phpcs:ignore
 					'replyable/template/comment_digest/html_recap',
 					__( 'Here\'s a recap of this post and conversation:', 'Postmatic' ),
-					$post_list->id()
+					$post_list->id(),
+					$comments
 				)
 			);
 			?>

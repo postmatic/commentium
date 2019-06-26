@@ -21,6 +21,7 @@
 			$permalink,
 			$comments_count,
 			$post_list->id(),
+			$comments,
 		)
 	);
 	?>
@@ -42,7 +43,8 @@
 		apply_filters( //phpcs:ignore
 			'replyable/template/comment_digest/text_reply',
 			__( '* Reply to this email to add a new comment. *', 'Postmatic' ),
-			$post_list->id()
+			$post_list->id(),
+			$comments
 		)
 	);
 	?>

@@ -22,7 +22,8 @@ echo wp_kses_post(
 		),
 		$commenter_name,
 		get_the_title( $comment->comment_post_ID ),
-		$post
+		$post,
+		$comment
 	)
 );
 ?>
@@ -38,7 +39,8 @@ echo wp_kses_post(
 		apply_filters( //phpcs:ignore
 			'replyable/template/comment_moderation/details_text_heading',
 			__( 'Details about the comment', 'postmatic-premium' ),
-			$post
+			$post,
+			$comment
 		)
 	);
 	?>
