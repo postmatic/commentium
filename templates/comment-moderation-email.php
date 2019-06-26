@@ -12,7 +12,20 @@
 ?>
 
 <h3 class="padded">
-	<?php printf( __( 'There is a new comment to moderate from <span class="capitalize">%s</span>.', 'postmatic-premium' ), $commenter_name ); ?>
+	<?php
+	echo wp_kses_post(
+		apply_filters( // phpcs:ignore
+			'replyable/template/comment_moderation/html_heading',
+			sprintf(
+				__( 'There is a new comment to moderate from <span class="capitalize">%s</span>.', 'postmatic-premium' ),
+				$commenter_name
+			),
+			$comment,
+			$commenter_name,
+			$post
+		)
+	);
+	?>
 </h3>
 
 <h4 class="inreply padded">
@@ -49,7 +62,15 @@
 
 <ul>
 	<li>
-		<?php _e( '<strong>Approve and Reply</strong>: Reply to this email with your response to both approve this comment and reply to it.', 'postmatic-premium' ); ?>
+		<?php
+		echo wp_kses_post(
+			apply_filters( // phpcs:ignore
+				'replyable/template/comment_moderation/html_reply',
+				__( '<strong>Approve and Reply</strong>: Reply to this email with your response to both approve this comment and reply to it.', 'postmatic-premium' ),
+				$post
+			)
+		);
+		?>
 	</li>
 	<li>
 		<a href="mailto:{{{reply_to}}}?body=<?php echo rawurlencode( __( 'approve', 'postmatic-premium' ) ); ?>&subject=<?php echo rawurlencode( __( 'Just hit send', 'postmatic-premium' ) ); ?>">
@@ -70,6 +91,12 @@
 		?></a>
 	</li>
 	<li><a href="<?php echo admin_url( 'comment.php?action=editcomment&c=' . $comment->comment_ID ); ?>"><?php
-			_e( 'Moderate this comment in your web browser', 'Postmatic' );
+			echo wp_kses_post(
+				apply_filters( //phpcs:ignore
+					'replyable/template/comment_moderation/html_browser',
+					__( 'Moderate this comment in your web browser', 'Postmatic' ),
+					$post
+				)
+			);
 		?></a></li>
 </ul>
