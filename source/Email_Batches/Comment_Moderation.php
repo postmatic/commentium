@@ -69,6 +69,24 @@ class Comment_Moderation extends Prompt_Email_Batch {
 		$html_template = new Templates\HTML( 'comment-moderation-email.php' );
 		$text_template = new Templates\Text( 'comment-moderation-email-text.php' );
 
+		/**
+		 * Filter: replyable/template/comment_moderation_html
+		 *
+		 * Allow replacing the email HTML template.
+		 *
+		 * @param object  Template data.
+		 */
+		$html_template = apply_filters( 'replyable/template/comment_moderation_html', $html_template );
+
+		/**
+		 * Filter: replyable/template/comment_moderation_text
+		 *
+		 * Allow replacing the email Text  template.
+		 *
+		 * @param object  Template data.
+		 */
+		$text_template = apply_filters( 'replyable/template/comment_moderation_text', $text_template );
+
 		$footnote_html = sprintf(
 			__(
 				'You received this email because you are the author of %1$s. To turn off Postmatic comment moderation please <a href="%2$s">visit your discussion settings in WordPress</a>.',
