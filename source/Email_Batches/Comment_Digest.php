@@ -47,23 +47,23 @@ class Comment_Digest extends Prompt_Email_Batch {
 		$this->post_list = $post_list;
 
 		$post_title = $post_list->get_wp_post()->post_title;
-		
-		$post_title_link = sprintf( 
+
+		$post_title_link = sprintf(
 			'<a href="%s">%s</a>',
 			get_permalink( $post_list->id() ),
 			$post_title
 		);
-		
+
 		$post_author = get_userdata( $post_list->get_wp_post()->post_author );
 		$post_author_name = $post_author ? $post_author->display_name : __( 'Anonymous', 'Postmatic' );
-		
+
 		$comments = get_comments( array(
 			'post_id' => $post_list->id(),
 			'date_query' => array( $post_list->undigested_comments_date_clauses() ),
 			'status' => 'approve',
 			'order' => 'ASC',
 		) );
-		
+
 		$this->comments = $comments;
 
 		$this->parent_comments = $this->get_parent_comments( $comments );
@@ -71,8 +71,8 @@ class Comment_Digest extends Prompt_Email_Batch {
 		\Prompt_Email_Comment_Rendering::classify_comments( $this->comments, 'featured' );
 		\Prompt_Email_Comment_Rendering::classify_comments( $this->parent_comments, 'contextual' );
 
-		$template_data = array( 
-			'post_list' => $post_list, 
+		$template_data = array(
+			'post_list' => $post_list,
 			'comments' => $comments,
 			'parent_comments' => $this->parent_comments,
 			'new_comment_count' => count( $comments ),
@@ -84,10 +84,28 @@ class Comment_Digest extends Prompt_Email_Batch {
 		$html_template = new Templates\HTML( "comment-digest-email.php" );
 		$text_template = new Templates\Text( "comment-digest-email-text.php" );
 
+		/**
+		 * Filter: replyable/template/comment_digest_html
+		 *
+		 * Allow replacing the email HTML template.
+		 *
+		 * @param object  Template data.
+		 */
+		$html_template = apply_filters( 'replyable/template/comment_digest_html', $html_template );
+
+		/**
+		 * Filter: replyable/template/comment_moderation_text
+		 *
+		 * Allow replacing the email Text template.
+		 *
+		 * @param object  Template data.
+		 */
+		$text_template = apply_filters( 'replyable/template/comment_digest_text', $text_template );
+
 		/* translators: first %s is post title, second is blog name */
 		$subject = html_entity_decode(
-			sprintf( 
-				__( 'Daily comment digest for %s from %s', 'postmatic-premium' ), 
+			sprintf(
+				__( 'Daily comment digest for %s from %s', 'postmatic-premium' ),
 				$post_list->get_wp_post()->post_title,
 				get_bloginfo( 'name' )
 			)
@@ -129,7 +147,7 @@ class Comment_Digest extends Prompt_Email_Batch {
 	public function get_post_list() {
 		return $this->post_list;
 	}
-	
+
 	/**
 	 * The comments in this digest.
 	 * @since 0.4.0
@@ -158,13 +176,13 @@ class Comment_Digest extends Prompt_Email_Batch {
 
 			$this->add_recipient( $recipient );
 		}
-		
+
 		return $this;
 	}
 
 	/**
 	 * Record current comment digest date.
-	 * 
+	 *
 	 * Should make it so each time we lock for sending the next digest will include only newer comments.
 	 *
 	 * @since 0.4.0
@@ -172,27 +190,27 @@ class Comment_Digest extends Prompt_Email_Batch {
 	 * @return $this;
 	 */
 	public function lock_for_sending() {
-		
+
 		$this->original_digested_date_gmt = $this->post_list->get_digested_comments_date_gmt();
-		
+
 		$this->post_list->set_digested_comments_date_gmt( get_gmt_from_date( 'now' ) );
-		
+
 		return $this;
 	}
 
 	/**
 	 * Reset the current commment digest date so a mailing for this batch can be retried.
-	 * 
+	 *
 	 * @since 0.4.0
 	 *
 	 * @return $this;
 	 */
 	public function clear_for_retry() {
-		
+
 		if ( $this->original_digested_date_gmt ) {
 			$this->post_list->set_digested_comments_date_gmt( $this->original_digested_date_gmt );
 		}
-		
+
 		return $this;
 	}
 
