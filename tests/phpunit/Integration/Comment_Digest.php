@@ -29,7 +29,7 @@ class Comment_Digest extends Mock_Mailer_Test_Case {
 		
 		add_filter( 'prompt/make_comment_flood_controller', array( $this, 'make_flood_controller' ), 10, 2 );
 		
-		$this->callback_repo = $this->getMock( 'Postmatic\Commentium\Repositories\Scheduled_Callback_HTTP' );
+		$this->callback_repo = $this->createMock( 'Postmatic\Commentium\Repositories\Scheduled_Callback_HTTP' );
 		$this->callback_repo->expects( $this->any() )->method( 'save' )->willReturnCallback( array( $this, 'set_callback' ) );
 		$this->callback_repo->expects( $this->any() )->method( 'delete' )->willReturnCallback( array( $this, 'delete_callback' ) );
 		$this->callback_repo->expects( $this->any() )->method( 'get_by_id' )->willReturnCallback( array( $this, 'get_callback' ) );
@@ -98,7 +98,7 @@ class Comment_Digest extends Mock_Mailer_Test_Case {
 		\Prompt_Comment_Mailing::send_notifications( $this->mail_data->new_comments[0] );
 		
 		// Expect the next comment digest to contain comment 3
-		$api_client = $this->getMock( 'Prompt_Api_Client' );
+		$api_client = $this->createMock( 'Prompt_Api_Client' );
 		$api_client->expects( $this->exactly( 2 ) )
 			->method( 'post_outbound_message_batches' )
 			->willReturnCallback( array( $this, 'verify_comment_digest_email' ) );
