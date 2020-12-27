@@ -12,10 +12,19 @@
 ?>
 <h1>
 <?php
-printf(
-	__( 'There is a new comment to moderate from %s on %s.', 'postmatic-premium' ),
-	$commenter_name,
-	get_the_title( $comment->comment_post_ID )
+echo wp_kses_post(
+	apply_filters( // phpcs:ignore
+		'replyable/template/comment_moderation/text_heading',
+		sprintf(
+			__( 'There is a new comment to moderate from %s on %s.', 'postmatic-premium' ), //phpcs:ignore
+			$commenter_name,
+			get_the_title( $comment->comment_post_ID )
+		),
+		$commenter_name,
+		get_the_title( $comment->comment_post_ID ),
+		$post,
+		$comment
+	)
 );
 ?>
 </h1>
@@ -24,7 +33,18 @@ printf(
 "<?php echo $comment->comment_content; ?>"
 </div>
 
-<h1><?php _e( 'Details about the comment', 'postmatic-premium' ); ?></h1>
+<h1>
+	<?php
+	echo wp_kses_post(
+		apply_filters( //phpcs:ignore
+			'replyable/template/comment_moderation/details_text_heading',
+			__( 'Details about the comment', 'postmatic-premium' ),
+			$post,
+			$comment
+		)
+	);
+	?>
+</h1>
 
 - <?php  echo __( 'Author', 'postmatic-premium' ) . ': ' . $comment->comment_author; ?>
 

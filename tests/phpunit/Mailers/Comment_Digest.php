@@ -17,7 +17,7 @@ class Comment_Digest extends WP_UnitTestCase {
 
 	function test_send() {
 
-		$api_mock = $this->getMock( 'Prompt_Api_Client' );
+		$api_mock = $this->createMock( 'Prompt_Api_Client' );
 		$api_mock->expects( $this->once() )
 			->method( 'post_outbound_message_batches' )
 			->willReturn( array( 'response' => array( 'code' => 200 ), 'body' => '{ "id": 1 }' ) );
@@ -48,7 +48,7 @@ class Comment_Digest extends WP_UnitTestCase {
 		$post_id = 1;
 		$post_list = new Lists\Posts\Post( $post_id );
 		
-		$api_mock = $this->getMock( 'Prompt_Api_Client' );
+		$api_mock = $this->createMock( 'Prompt_Api_Client' );
 		$api_mock->expects( $this->never() )->method( 'post_outbound_message_batches' );
 	
 		$batch_mock = $this->getMockBuilder( 'Postmatic\Commentium\Email_Batches\Comment_Digest' )
@@ -73,7 +73,7 @@ class Comment_Digest extends WP_UnitTestCase {
 			->method( 'reschedule' )
 			->with( 'postmatic/premium/mailers/comment_digest/initiate', array( $post_id ) );
 
-		$factory_mock = $this->getMock( 'Foo', array( 'get_rescheduler_mock' ) );
+		$factory_mock = $this->getMockBuilder( 'Foo' )->setMethods( array( 'get_rescheduler_mock' ) )->getMock();
 		$factory_mock->expects( $this->once() )
 			->method( 'get_rescheduler_mock' )
 			->willReturn( $rescheduler_mock );
@@ -96,7 +96,7 @@ class Comment_Digest extends WP_UnitTestCase {
 		$post_list = new Lists\Posts\Post( $post_id );
 		$post_list->set_comment_digest_callback_id( $callback_id );
 		
-		$repo_mock = $this->getMock( 'Postmatic\Commentium\Repositories\Scheduled_Callback_HTTP' );
+		$repo_mock = $this->createMock( 'Postmatic\Commentium\Repositories\Scheduled_Callback_HTTP' );
 		$repo_mock->expects( $this->once() )
 			->method( 'delete' )
 			->with( $callback_id )

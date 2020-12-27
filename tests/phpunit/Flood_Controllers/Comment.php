@@ -39,7 +39,7 @@ class Comment extends Mock_Mailer_Test_Case {
 
 		$this->mailer_expects = $this->never();
 
-		$this->callback_repo_mock = $this->getMock( 'Postmatic\Commentium\Repositories\Scheduled_Callback_HTTP' );
+		$this->callback_repo_mock = $this->createMock( 'Postmatic\Commentium\Repositories\Scheduled_Callback_HTTP' );
 	}
 
 	public function test_pre_flood() {
