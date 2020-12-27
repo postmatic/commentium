@@ -40,11 +40,10 @@ class Mock_Mailer_Test_Case extends No_Outbound_Test_Case {
 
 		$this->mailer_payload = $payload;
 
-		$mock = $this->getMock(
-			get_class( $mailer ),
-			array( $this->mailer_method ),
-			array( $payload )
-		);
+		$mock = $this->getMockBuilder( get_class( $mailer ) )
+			->setMethods( array( $this->mailer_method ) )
+			->setConstructorArgs( array( $payload ) )
+			->getMock();
 
 		$mock->expects( $this->mailer_expects )
 			->method( $this->mailer_method )

@@ -13,7 +13,7 @@ class Scheduled_Callback_HTTP extends PHPUnit_Framework_TestCase {
 
 		$values = array( 'id' => 1 );
 
-		$client_mock = $this->getMock( 'Prompt_Api_Client' );
+		$client_mock = $this->createMock( 'Prompt_Api_Client' );
 		$client_mock->expects( $this->once() )
 			->method( 'get_scheduled_callback' )
 			->with( $values['id'] )
@@ -33,7 +33,7 @@ class Scheduled_Callback_HTTP extends PHPUnit_Framework_TestCase {
 
 		$id = 1;
 
-		$client_mock = $this->getMock( 'Prompt_Api_Client' );
+		$client_mock = $this->createMock( 'Prompt_Api_Client' );
 		$client_mock->expects( $this->once() )
 			->method( 'delete_scheduled_callback' )
 			->with( $id )
@@ -51,7 +51,7 @@ class Scheduled_Callback_HTTP extends PHPUnit_Framework_TestCase {
 
 		$callback = new Models\Scheduled_Callback( array( 'id' => 1 ) );
 
-		$client_mock = $this->getMock( 'Prompt_Api_Client' );
+		$client_mock = $this->createMock( 'Prompt_Api_Client' );
 		$client_mock->expects( $this->once() )
 			->method( 'post_scheduled_callbacks' )
 			->with( $callback->to_array() )

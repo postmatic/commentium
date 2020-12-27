@@ -14,7 +14,7 @@ class Comment_IQ extends PHPUnit_Framework_TestCase {
 		$wp_post_stub->post_status = 'publish';
 		$wp_post_stub->post_type = 'post';
 
-		$repo_mock = $this->getMock( 'Postmatic\Commentium\Repositories\Comment_IQ' );
+		$repo_mock = $this->createMock( 'Postmatic\Commentium\Repositories\Comment_IQ' );
 
 		$repo_mock->expects( $this->never() )->method( 'save_article' );
 
@@ -34,9 +34,9 @@ class Comment_IQ extends PHPUnit_Framework_TestCase {
 		$wp_post_stub->post_type = 'post';
 		$wp_post_stub->post_content = 'TEST CONTENT';
 
-		$repo_mock = $this->getMock( 'Postmatic\Commentium\Repositories\Comment_IQ' );
+		$repo_mock = $this->createMock( 'Postmatic\Commentium\Repositories\Comment_IQ' );
 
-		$article_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
+		$article_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
 
 		$repo_mock->expects( $this->once() )
 			->method( 'save_article' )
@@ -57,13 +57,13 @@ class Comment_IQ extends PHPUnit_Framework_TestCase {
 		$wp_comment_stub = new stdClass();
 		$wp_comment_stub->approved = '1';
 
-		$repo_mock = $this->getMock( 'Postmatic\Commentium\Repositories\Comment_IQ' );
+		$repo_mock = $this->createMock( 'Postmatic\Commentium\Repositories\Comment_IQ' );
 
 		$repo_mock->expects( $this->never() )->method( 'save_comment' );
 
-		$article_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
+		$article_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
 
-		$iq_comment_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Comment' );
+		$iq_comment_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Comment' );
 
 		$dependencies = array(
 			'enabled_message_types' => array( 'comment' ),
@@ -80,11 +80,11 @@ class Comment_IQ extends PHPUnit_Framework_TestCase {
 		$wp_comment_stub = new stdClass();
 		$wp_comment_stub->approved = '1';
 
-		$article_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
+		$article_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
 
-		$iq_comment_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Comment' );
+		$iq_comment_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Comment' );
 
-		$repo_mock = $this->getMock( 'Postmatic\Commentium\Repositories\Comment_IQ' );
+		$repo_mock = $this->createMock( 'Postmatic\Commentium\Repositories\Comment_IQ' );
 
 		$repo_mock->expects( $this->once() )
 			->method( 'save_comment' )

@@ -9,7 +9,7 @@ class Comment_IQ_API extends PHPUnit_Framework_TestCase {
 
 	function test_add_article() {
 
-		$article_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
+		$article_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
 
 		$article_mock->expects( $this->once() )
 			->method( 'get_comment_iq_id' )
@@ -42,7 +42,7 @@ class Comment_IQ_API extends PHPUnit_Framework_TestCase {
 
 	function test_update_article() {
 
-		$article_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
+		$article_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
 
 		$id = 6;
 		$content = '<p>TEST CONTENT</p>';
@@ -79,13 +79,13 @@ class Comment_IQ_API extends PHPUnit_Framework_TestCase {
 		$date = 'now';
 		$username = 'tester';
 
-		$article_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
+		$article_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
 
 		$article_mock->expects( $this->once() )
 			->method( 'get_comment_iq_id' )
 			->willReturn( $article_id );
 
-		$comment_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Comment' );
+		$comment_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Comment' );
 
 		$comment_mock->expects( $this->once() )
 			->method( 'get_comment_iq_body' )
@@ -131,9 +131,9 @@ class Comment_IQ_API extends PHPUnit_Framework_TestCase {
 		$date = 'now';
 		$username = 'tester';
 
-		$article_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
+		$article_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Article' );
 
-		$comment_mock = $this->getMock( 'Postmatic\Commentium\Models\Comment_IQ_Comment' );
+		$comment_mock = $this->createMock( 'Postmatic\Commentium\Models\Comment_IQ_Comment' );
 
 		$comment_mock->expects( $this->once() )
 			->method( 'get_comment_iq_id' )

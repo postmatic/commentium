@@ -137,7 +137,7 @@ class Comment_Moderation extends No_Outbound_Test_Case {
 		$command->set_keys( array( $comment_id, $subscriber_id ) );
 		$command->set_message( $message );
 
-		$this->setExpectedException( 'PHPUnit_Framework_Error' );
+		$this->expectException( 'PHPUnit_Framework_Error' );
 		$command->execute();
 
 		$comment = get_comment( $comment_id );
@@ -169,7 +169,7 @@ class Comment_Moderation extends No_Outbound_Test_Case {
 	}
 
 	function test_wrong_number_of_keys_exception() {
-		$this->setExpectedException( 'PHPUnit_Framework_Error' );
+		$this->expectException( 'PHPUnit_Framework_Error' );
 
 		$command = new Commands\Comment_Moderation();
 		$command->set_keys( array( 3 ) );
